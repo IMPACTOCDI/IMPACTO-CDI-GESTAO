@@ -1,0 +1,20 @@
+2025/07/21-15:45:09.139 3f20 Reusing MANIFEST C:\Users\AryanMartins\Desktop\Gestor de projetos IMI\project-hive-manage-14\.wwebjs_auth\session-main\Default\Local Storage\leveldb/MANIFEST-000001
+2025/07/21-15:45:09.140 3f20 Recovering log #51
+2025/07/21-15:45:09.140 3f20 Level-0 table #54: started
+2025/07/21-15:45:09.143 3f20 Level-0 table #54: 14184 bytes OK
+2025/07/21-15:45:09.145 3f20 Delete type=0 #51
+2025/07/21-17:45:23.017 a2ac Level-0 table #57: started
+2025/07/21-17:45:23.020 a2ac Level-0 table #57: 13790 bytes OK
+2025/07/21-17:45:23.022 a2ac Delete type=0 #55
+2025/07/21-19:55:26.200 58f0 Level-0 table #59: started
+2025/07/21-19:55:26.202 58f0 Level-0 table #59: 14352 bytes OK
+2025/07/21-19:55:26.204 58f0 Delete type=0 #56
+2025/07/21-19:55:26.206 58f0 Compacting 4@0 + 1@1 files
+2025/07/21-19:55:26.210 58f0 Generated table #60@0: 173 keys, 6284 bytes
+2025/07/21-19:55:26.210 58f0 Compacted 4@0 + 1@1 files => 6284 bytes
+2025/07/21-19:55:26.211 58f0 compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/07/21-19:55:26.211 58f0 Delete type=2 #49
+2025/07/21-19:55:26.211 58f0 Delete type=2 #52
+2025/07/21-19:55:26.211 58f0 Delete type=2 #54
+2025/07/21-19:55:26.211 58f0 Delete type=2 #57
+2025/07/21-19:55:26.211 58f0 Delete type=2 #59

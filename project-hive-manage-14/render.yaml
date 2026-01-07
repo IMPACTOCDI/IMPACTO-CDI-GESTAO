@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: gestor-de-projetos-imi-frontend
+    env: static
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html 

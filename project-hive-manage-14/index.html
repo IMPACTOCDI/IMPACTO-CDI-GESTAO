@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Imi Gestão</title>
+    <meta name="description" content="Sistema de Gestão de Projetos e Tarefas" />
+    <meta name="author" content="Imi Gestão" />
+
+    <!-- Meta tags para SPA -->
+    <meta name="robots" content="noindex, nofollow" />
+    <!-- Meta tags para prevenir cache do navegador (reforçadas) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+    <meta name="turbo-cache-control" content="no-cache" />
+    <meta name="turbo-visit-control" content="reload" />
+
+    <meta property="og:title" content="Imi Gestão" />
+    <meta property="og:description" content="Sistema de Gestão de Projetos e Tarefas" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/lovable-uploads/6a8c398e-4ec1-41d5-adf1-556d3b24b5d6.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/lovable-uploads/6a8c398e-4ec1-41d5-adf1-556d3b24b5d6.png" />
+    
+    <link rel="icon" href="/lovable-uploads/6a8c398e-4ec1-41d5-adf1-556d3b24b5d6.png" type="image/png">
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script>
+      // Suprimir erro comum do Chrome relacionado a extensões (deve ser executado ANTES de qualquer outro script)
+      // Este erro não afeta a funcionalidade da aplicação
+      (function() {
+        // Interceptar window.onerror para capturar erros não tratados
+        const originalOnError = window.onerror;
+        window.onerror = function(message, source, lineno, colno, error) {
+          if (typeof message === 'string' && (
+            message.includes('runtime.lastError') || 
+            message.includes('message port closed') ||
+            message.includes('The message port closed')
+          )) {
+            return true; // Suprimir o erro
+          }
+          if (originalOnError) {
+            return originalOnError.call(this, message, source, lineno, colno, error);
+          }
+          return false;
+        };
+
+        // Interceptar console.error ANTES de qualquer outro código
+        const originalError = console.error;
+        console.error = function(...args) {
+          const message = args[0]?.toString() || '';
+          // Suprimir apenas o erro específico de message port closed
+          if (message.includes('runtime.lastError') || 
+              message.includes('message port closed') ||
+              message.includes('The message port closed') ||
+              message.includes('Unchecked runtime.lastError')) {
+            return; // Não exibir este erro
+          }
+          originalError.apply(console, args);
+        };
+
+        // Interceptar console.warn também
+        const originalWarn = console.warn;
+        console.warn = function(...args) {
+          const message = args[0]?.toString() || '';
+          if (message.includes('runtime.lastError') || 
+              message.includes('message port closed')) {
+            return;
+          }
+          originalWarn.apply(console, args);
+        };
+      })();
+    </script>
+    <script type="module">
+
+      // Garante que o React seja carregado antes de qualquer outro módulo
+      import 'react';
+      import 'react-dom';
+      
+      // Script para detectar problemas de cache e forçar atualização
+      const lastVisit = localStorage.getItem('lastVisit');
+      const currentTime = Date.now();
+      localStorage.setItem('lastVisit', currentTime);
+      
+      // Se a última visita foi há mais de 30 minutos, forçar atualização
+      if (lastVisit && (currentTime - parseInt(lastVisit)) > 30 * 60 * 1000) {
+        // Verificar se a página está sendo carregada do cache
+        if (performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
+          console.log('Detectada navegação back/forward após longo período, forçando atualização');
+          // Adicionar parâmetro de timestamp para forçar nova requisição
+          window.location.href = window.location.href.split('?')[0] + '?t=' + currentTime;
+        }
+      }
+      
+      // Adicionar listener para o evento pageshow para detectar quando a página é restaurada do cache
+      window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+          console.log('Página restaurada do cache do navegador (bfcache), verificando dados');
+          // Disparar evento customizado para notificar a aplicação
+          window.dispatchEvent(new CustomEvent('app-cache-restored'));
+        }
+      });
+    </script>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

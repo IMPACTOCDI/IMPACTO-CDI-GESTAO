@@ -1,0 +1,28 @@
+# Ignorar arquivos de desenvolvimento
+node_modules
+.git
+.env
+.env.*
+!.env.example
+
+# Ignorar arquivos de build
+dist
+build
+.next
+out
+
+# Ignorar arquivos de teste
+coverage
+.nyc_output
+test
+tests
+__tests__
+*.test.*
+*.spec.*
+
+# Ignorar arquivos de IDE
+.idea
+.vscode
+*.swp
+*.swo
+.DS_Store 
