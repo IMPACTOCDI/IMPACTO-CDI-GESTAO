@@ -113,7 +113,7 @@ const Sidebar = () => {
         </div>
         
         <div className="px-4 py-4 border-t border-border/50 mt-auto">
-          <p className="text-xs text-muted-foreground text-center">Imi Gestão Profissional v1.0</p>
+          <p className="text-xs text-muted-foreground text-center">IMPACTO Profissional v1.0</p>
         </div>
       </div>
     </div>

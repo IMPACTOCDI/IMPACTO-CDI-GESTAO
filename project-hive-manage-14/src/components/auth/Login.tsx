@@ -37,12 +37,12 @@ const Login = () => {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
             <img 
-              src="/lovable-uploads/6a8c398e-4ec1-41d5-adf1-556d3b24b5d6.png" 
-              alt="Imi Gestão" 
-              className="h-12 w-12 object-contain mr-3" 
+              src="/logo-impacto/logo.png" 
+              alt="IMPACTO Consultoria e Desenvolvimento Institucional" 
+              className="h-16 w-auto object-contain mr-3" 
             />
             <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent">
-              IMI Gestão
+              IMPACTO
             </h1>
           </div>
           <p className="text-muted-foreground mt-2">Sistema de Gestão de Projetos e Tarefas</p>

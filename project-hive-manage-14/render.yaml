@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: gestor-de-projetos-imi-frontend
+    name: gestor-de-projetos-impacto-frontend
     env: static
     buildCommand: npm run build
     staticPublishPath: ./dist

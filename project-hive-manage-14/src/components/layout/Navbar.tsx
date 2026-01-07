@@ -32,12 +32,12 @@ const Navbar = () => {
         <div className={cn("flex items-center space-x-4", isMobile && "ml-12")}>
           <div className="flex items-center space-x-3">
             <img 
-              src="/lovable-uploads/6a8c398e-4ec1-41d5-adf1-556d3b24b5d6.png" 
-              alt="Imi Gestão" 
-              className="h-10 w-10 object-contain" 
+              src="/logo-impacto/logo.png" 
+              alt="IMPACTO Consultoria e Desenvolvimento Institucional" 
+              className="h-12 w-auto object-contain" 
             />
             <h1 className="text-xl md:text-2xl font-bold gradient-primary bg-clip-text text-transparent">
-              IMI Gestão
+              IMPACTO
             </h1>
           </div>
           {user && (
