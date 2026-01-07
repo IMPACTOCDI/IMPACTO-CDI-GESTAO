@@ -1,0 +1,16 @@
+/* /index.html 200 
+
+# Redireciona todas as rotas para index.html (SPA routing)
+/*    /index.html   200
+
+# Regras específicas para API
+/api/*  https://project-hive-manage.onrender.com/api/:splat  200
+
+# Regras específicas para o app
+/projects/*  /index.html  200
+/dashboard/*  /index.html  200
+/profile/*  /index.html  200
+/tasks/*  /index.html  200
+/teams/*  /index.html  200
+/settings/*  /index.html  200
+/auth/*  /index.html  200 
