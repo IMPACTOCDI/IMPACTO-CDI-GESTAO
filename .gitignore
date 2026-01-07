@@ -67,6 +67,10 @@ supabase/.temp
 # Cursor
 .cursor/
 
+# WhatsApp WebJS
+.wwebjs_auth/
+.wwebjs_cache/
+
 # Outros
 *.swp
 *.swo
