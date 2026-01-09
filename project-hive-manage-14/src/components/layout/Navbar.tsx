@@ -34,11 +34,11 @@ const Navbar = () => {
             <img 
               src="/logo-impacto/logo.png" 
               alt="IMPACTO Consultoria e Desenvolvimento Institucional" 
-              className="h-12 w-auto object-contain" 
+              className="h-14 md:h-16 w-auto object-contain" 
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
             />
-            <h1 className="text-xl md:text-2xl font-bold gradient-primary bg-clip-text text-transparent">
-              IMPACTO
-            </h1>
           </div>
           {user && (
             <div className="hidden md:flex items-center space-x-2 text-sm text-muted-foreground">

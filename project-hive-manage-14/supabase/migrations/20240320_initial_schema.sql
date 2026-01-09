@@ -99,7 +99,6 @@ CREATE TABLE project_members (
     PRIMARY KEY (project_id, user_id)
 );
 
--- Habilitar RLS
 ALTER TABLE project_members ENABLE ROW LEVEL SECURITY;
 
 -- Política para permitir que o criador do projeto adicione o primeiro membro
@@ -140,38 +139,7 @@ CREATE POLICY "Project creator can manage members"
             WHERE projects.id = project_members.project_id
             AND projects.created_by = auth.uid()
         )
-    );
-
--- Recriar as políticas das tarefas
-CREATE POLICY "Permitir criação de tarefas para membros do projeto"
-    ON tasks FOR INSERT
-    WITH CHECK (
-        EXISTS (
-            SELECT 1 FROM project_members
-            WHERE project_members.project_id = tasks.project_id
-            AND project_members.user_id = auth.uid()
-        )
-    );
-
-CREATE POLICY "Permitir leitura de tarefas para membros do projeto"
-    ON tasks FOR SELECT
-    USING (
-        EXISTS (
-            SELECT 1 FROM project_members
-            WHERE project_members.project_id = tasks.project_id
-            AND project_members.user_id = auth.uid()
-        )
-    );
-
-CREATE POLICY "Permitir atualização de tarefas para membros do projeto"
-    ON tasks FOR UPDATE
-    USING (
-        EXISTS (
-            SELECT 1 FROM project_members
-            WHERE project_members.project_id = tasks.project_id
-            AND project_members.user_id = auth.uid()
-        )
-    );
+);
 
 -- Recriar a política de visualização de projetos
 CREATE POLICY "Projects are viewable by members"
@@ -238,6 +206,37 @@ ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
 ALTER TABLE task_tags ENABLE ROW LEVEL SECURITY;
 ALTER TABLE comments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE calendar_events ENABLE ROW LEVEL SECURITY;
+
+-- Recriar as políticas das tarefas
+CREATE POLICY "Permitir criação de tarefas para membros do projeto"
+    ON tasks FOR INSERT
+    WITH CHECK (
+        EXISTS (
+            SELECT 1 FROM project_members
+            WHERE project_members.project_id = tasks.project_id
+            AND project_members.user_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "Permitir leitura de tarefas para membros do projeto"
+    ON tasks FOR SELECT
+    USING (
+        EXISTS (
+            SELECT 1 FROM project_members
+            WHERE project_members.project_id = tasks.project_id
+            AND project_members.user_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "Permitir atualização de tarefas para membros do projeto"
+    ON tasks FOR UPDATE
+    USING (
+        EXISTS (
+            SELECT 1 FROM project_members
+            WHERE project_members.project_id = tasks.project_id
+            AND project_members.user_id = auth.uid()
+        )
+    );
 
 -- Create policies
 CREATE POLICY "Public profiles are viewable by everyone"

@@ -67,8 +67,8 @@ const Calendar = () => {
 
         // Buscar prazos das tarefas
         const taskDeadlines = projects
-          .flatMap(project => project.tasks)
-          .filter(task => task.due_date)
+          .flatMap(project => project.tasks || [])
+          .filter(task => task && task.due_date)
           .map(task => ({
             id: `task-${task.id}`,
             title: `Prazo: ${task.title}`,

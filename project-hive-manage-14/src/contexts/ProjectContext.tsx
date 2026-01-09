@@ -1235,15 +1235,77 @@ export function ProjectProvider({ children }: ProjectProviderProps) {
         return;
       }
 
-      // Agora vamos excluir os projetos
-      const { error: deleteError } = await supabase
-        .from('projects')
-        .delete()
-        .not('deleted_at', 'is', null);
+      // Excluir projetos um por um para evitar conflitos de constraint
+      const deleteResults = [];
+      for (const project of projectsToDelete) {
+        try {
+          // Primeiro, excluir dependências relacionadas (tasks, comments, etc.)
+          // Excluir tarefas do projeto (soft delete primeiro, depois hard delete se necessário)
+          const { error: tasksError } = await supabase
+            .from('tasks')
+            .delete()
+            .eq('project_id', project.id);
+          
+          if (tasksError && tasksError.code !== 'PGRST116') { // PGRST116 = nenhuma linha encontrada
+            logger.warn('Erro ao excluir tarefas do projeto', { error: tasksError, projectId: project.id, context: 'ProjectContext' });
+          }
+          
+          // Excluir comentários do projeto
+          const { error: commentsError } = await supabase
+            .from('comments')
+            .delete()
+            .eq('project_id', project.id);
+          
+          if (commentsError && commentsError.code !== 'PGRST116') {
+            logger.warn('Erro ao excluir comentários do projeto', { error: commentsError, projectId: project.id, context: 'ProjectContext' });
+          }
+          
+          // Excluir membros do projeto
+          const { error: membersError } = await supabase
+            .from('project_members')
+            .delete()
+            .eq('project_id', project.id);
+          
+          if (membersError && membersError.code !== 'PGRST116') {
+            logger.warn('Erro ao excluir membros do projeto', { error: membersError, projectId: project.id, context: 'ProjectContext' });
+          }
+          
+          // Agora excluir o projeto
+          const { error } = await supabase
+            .from('projects')
+            .delete()
+            .eq('id', project.id);
+          
+          if (error) {
+            // Se for erro 409 (Conflict), pode ser que o projeto já foi excluído ou há constraint
+            if (error.code === '23503' || error.message?.includes('409')) {
+              logger.warn('Projeto pode ter dependências ou já foi excluído', { error, projectId: project.id, context: 'ProjectContext' });
+              // Continuar com os outros projetos mesmo se este falhar
+              deleteResults.push({ projectId: project.id, success: false, error: error.message });
+            } else {
+              logger.error('Erro ao excluir projeto individual', { error, projectId: project.id, context: 'ProjectContext' });
+              deleteResults.push({ projectId: project.id, success: false, error: error.message });
+            }
+          } else {
+            deleteResults.push({ projectId: project.id, success: true });
+          }
+        } catch (error: any) {
+          logger.error('Erro ao excluir projeto e dependências', { error, projectId: project.id, context: 'ProjectContext' });
+          deleteResults.push({ projectId: project.id, success: false, error: error.message });
+        }
+      }
 
-      if (deleteError) {
-        logger.error('Erro ao excluir projetos', { error: deleteError, context: 'ProjectContext' });
-        throw deleteError;
+      // Verificar se pelo menos alguns projetos foram excluídos
+      const successCount = deleteResults.filter(r => r.success).length;
+      if (successCount === 0 && deleteResults.length > 0) {
+        throw new Error('Não foi possível excluir nenhum projeto. Verifique as permissões e dependências.');
+      } else if (successCount < deleteResults.length) {
+        logger.warn('Alguns projetos não puderam ser excluídos', { 
+          successCount, 
+          total: deleteResults.length,
+          context: 'ProjectContext' 
+        });
+        toast.warning(`${successCount} de ${deleteResults.length} projetos foram excluídos. Alguns podem ter dependências.`);
       }
 
       logger.info('Projetos excluídos com sucesso', { context: 'ProjectContext' });

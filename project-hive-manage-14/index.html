@@ -24,11 +24,38 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="/logo-impacto/logo.png" />
     
-    <link rel="icon" href="/logo-impacto/logo.png" type="image/png">
+    <!-- Favicon - Logo IMPACTO (com cache buster para forçar atualização) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo-impacto/logo.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="/logo-impacto/logo.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo-impacto/logo.png?v=2">
+    <link rel="shortcut icon" href="/logo-impacto/logo.png?v=2" type="image/png">
   </head>
 
   <body>
     <div id="root"></div>
+    <script>
+      // Aplicar tema claro por padrão (remover classe dark se existir)
+      (function() {
+        // Verificar se há tema salvo no localStorage
+        const savedPreferences = localStorage.getItem('settings-preferences');
+        if (savedPreferences) {
+          try {
+            const prefs = JSON.parse(savedPreferences);
+            if (prefs.theme === 'dark') {
+              document.documentElement.className = 'dark';
+            } else {
+              document.documentElement.className = '';
+            }
+          } catch (e) {
+            // Se houver erro, usar tema claro por padrão
+            document.documentElement.className = '';
+          }
+        } else {
+          // Sem preferências salvas, usar tema claro por padrão
+          document.documentElement.className = '';
+        }
+      })();
+    </script>
     <script>
       // Suprimir erro comum do Chrome relacionado a extensões (deve ser executado ANTES de qualquer outro script)
       // Este erro não afeta a funcionalidade da aplicação
@@ -104,9 +131,19 @@
           window.dispatchEvent(new CustomEvent('app-cache-restored'));
         }
       });
+
+      // Forçar atualização do favicon para evitar cache
+      (function() {
+        const faviconLinks = document.querySelectorAll('link[rel*="icon"]');
+        const timestamp = Date.now();
+        faviconLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href && !href.includes('?v=')) {
+            link.setAttribute('href', href.split('?')[0] + '?v=' + timestamp);
+          }
+        });
+      })();
     </script>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

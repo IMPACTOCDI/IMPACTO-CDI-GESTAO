@@ -187,8 +187,8 @@ const Projects = () => {
   return <div className="space-y-4 md:space-y-6 px-4 md:px-6 lg:px-8 max-w-[1600px] mx-auto">
       <div className="flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
         <div className="text-center md:text-left">
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-50">Projetos</h1>
-          <p className="text-sm md:text-base text-slate-50">
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground">Projetos</h1>
+          <p className="text-sm md:text-base text-foreground">
             Gerencie todos os seus projetos
             {user?.role === 'admin' && ' (Visualização Administrativa)'}
           </p>

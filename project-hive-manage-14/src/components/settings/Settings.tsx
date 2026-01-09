@@ -31,7 +31,7 @@ const Settings = () => {
   });
 
   const [preferences, setPreferences] = useState({
-    theme: 'dark',
+    theme: 'light',
     language: 'pt-BR',
     timezone: 'America/Sao_Paulo',
     dateFormat: 'DD/MM/YYYY',
@@ -57,7 +57,18 @@ const Settings = () => {
       setNotifications(JSON.parse(savedNotifications));
     }
     if (savedPreferences) {
-      setPreferences(JSON.parse(savedPreferences));
+      const prefs = JSON.parse(savedPreferences);
+      setPreferences(prefs);
+      // Apply theme from saved preferences
+      if (prefs.theme) {
+        document.documentElement.className = prefs.theme === 'dark' ? 'dark' : '';
+      } else {
+        // Default to light theme
+        document.documentElement.className = '';
+      }
+    } else {
+      // Default to light theme if no saved preferences
+      document.documentElement.className = '';
     }
     if (savedPrivacy) {
       setPrivacy(JSON.parse(savedPrivacy));
@@ -185,7 +196,7 @@ const Settings = () => {
     };
     
     const defaultPreferences = {
-      theme: 'dark',
+      theme: 'light',
       language: 'pt-BR',
       timezone: 'America/Sao_Paulo',
       dateFormat: 'DD/MM/YYYY',

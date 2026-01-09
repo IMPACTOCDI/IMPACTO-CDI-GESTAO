@@ -6,52 +6,53 @@
 
 @layer base {
   :root {
-    --background: 15 23% 7%;
-    --foreground: 222.2 84% 98%;
+    /* Light theme colors */
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
 
-    --card: 222.2 14.3% 8.1%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
 
-    --popover: 222.2 14.3% 8.1%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
 
     --primary: 208 58% 38%;
-    --primary-foreground: 222.2 84% 4.9%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 75.1%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
     --ring: 208 58% 38%;
 
     --radius: 1rem;
 
-    --sidebar-background: 222.2 14.3% 8.1%;
-    --sidebar-foreground: 210 40% 98%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 222.2 47.4% 11.2%;
     --sidebar-primary: 208 58% 38%;
-    --sidebar-primary-foreground: 222.2 84% 4.9%;
-    --sidebar-accent: 217.2 32.6% 17.5%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217.2 32.6% 17.5%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 40% 96.1%;
+    --sidebar-accent-foreground: 222.2 47.4% 11.2%;
+    --sidebar-border: 214.3 31.8% 91.4%;
     --sidebar-ring: 208 58% 38%;
 
-    /* Professional dark theme colors */
+    /* Professional light theme colors */
     --success: 142 71% 45%;
-    --success-foreground: 210 40% 98%;
+    --success-foreground: 0 0% 100%;
     --warning: 45 93% 47%;
-    --warning-foreground: 222.2 14.3% 8.1%;
+    --warning-foreground: 222.2 47.4% 11.2%;
     --info: 208 58% 38%;
-    --info-foreground: 210 40% 98%;
+    --info-foreground: 0 0% 100%;
   }
 
   .dark {
@@ -116,56 +117,26 @@
     @apply bg-background;
   }
 
-  /* Force dark background for all containers */
+  /* Light background for all containers */
   #root {
     @apply bg-background min-h-screen;
   }
 
-  /* Remove any white backgrounds */
-  .bg-white {
-    @apply bg-card;
-  }
-
-  .text-white {
-    @apply text-foreground;
-  }
-
-  /* Fix text colors that might be too dark */
-  .text-black {
-    @apply text-foreground;
-  }
-
-  .text-gray-900 {
-    @apply text-foreground;
-  }
-
-  .text-gray-800 {
-    @apply text-foreground;
-  }
-
-  .text-gray-700 {
-    @apply text-muted-foreground;
-  }
-
-  .text-gray-600 {
-    @apply text-muted-foreground;
-  }
-
-  /* Custom scrollbar for dark theme */
+  /* Custom scrollbar for light theme */
   ::-webkit-scrollbar {
     width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-background;
+    @apply bg-gray-100;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-border rounded-full;
+    @apply bg-gray-300 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground;
+    @apply bg-gray-400;
   }
 
   /* Smooth animations */
@@ -173,9 +144,9 @@
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
   }
 
-  /* Professional gradients */
+  /* Professional gradients - ajustado para tema claro */
   .gradient-primary {
-    background: linear-gradient(135deg, #2c5d96 0%, #ffffff 100%);
+    background: linear-gradient(135deg, #2c5d96 0%, #4a7ab8 100%);
   }
 
   .gradient-success {
@@ -237,6 +208,11 @@
 
   .card-dark {
     @apply bg-card border-border shadow-lg hover-lift;
+  }
+
+  /* Light theme card styling */
+  .card-light {
+    @apply bg-white border-gray-200 shadow-md hover:shadow-lg transition-shadow;
   }
 
   /* Ensure text is always readable */

@@ -1,6 +1,6 @@
-# Project Hive - Gestor de Projetos
+# IMPACTO - Gestor de Projetos
 
-Um sistema moderno de gerenciamento de projetos com interface intuitiva e recursos avançados.
+Sistema de gestão de projetos desenvolvido para a IMPACTO Consultoria e Desenvolvimento Institucional.
 
 ## 🚀 Funcionalidades
 
@@ -36,8 +36,8 @@ Um sistema moderno de gerenciamento de projetos com interface intuitiva e recurs
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/project-hive.git
-cd project-hive
+git clone https://github.com/IMPACTOCDI/IMPACTO-CDI-GESTAO.git
+cd IMPACTO-CDI-GESTAO/project-hive-manage-14
 ```
 
 2. Instale as dependências:
@@ -101,17 +101,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 📧 Suporte
 
-Para suporte, envie um email para seu-email@exemplo.com ou abra uma issue no GitHub.
-
-# Gestor de Projetos IMI
-
-Sistema de gestão de projetos desenvolvido para o IMI.
-
-## Configuração do Ambiente
-
-1. Clone o repositório
-2. Instale as dependências com `npm install`
-3. Execute o projeto com `npm run dev`
+Para suporte, entre em contato com a IMPACTO Consultoria e Desenvolvimento Institucional.
 
 ## Scripts Disponíveis
 

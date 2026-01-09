@@ -103,11 +103,11 @@ const Register = () => {
             <img 
               src="/logo-impacto/logo.png" 
               alt="IMPACTO Consultoria e Desenvolvimento Institucional" 
-              className="h-16 w-auto object-contain mr-3" 
+              className="h-28 md:h-32 w-auto object-contain" 
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
             />
-            <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent">
-              IMPACTO
-            </h1>
           </div>
           <p className="text-muted-foreground mt-2">Sistema de Gestão Profissional</p>
         </div>

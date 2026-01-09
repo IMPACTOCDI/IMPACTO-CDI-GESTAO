@@ -11,7 +11,7 @@ export const CONNECTION_CONFIG = {
   CONNECTION_TIMEOUT: 15000, // Timeout para operações de conexão (ms)
   HEARTBEAT_INTERVAL: 30000, // Intervalo para heartbeat do realtime (ms)
   CIRCUIT_BREAKER_THRESHOLD: 5, // Número de falhas para abrir o circuit breaker
-  CIRCUIT_BREAKER_TIMEOUT: 30000 // Tempo para resetar o circuit breaker (ms)
+  CIRCUIT_BREAKER_TIMEOUT: 60000 // Tempo para resetar o circuit breaker (ms) - aumentado para 60s
 };
 
 // Circuit Breaker para controle de falhas
@@ -23,11 +23,23 @@ class CircuitBreaker {
   async execute<T>(operation: () => Promise<T>): Promise<T> {
     if (this._isOpen) {
       const now = Date.now();
-      if (now - this.lastFailureTime > CONNECTION_CONFIG.CIRCUIT_BREAKER_TIMEOUT) {
+      const timeSinceLastFailure = now - this.lastFailureTime;
+      
+      if (timeSinceLastFailure > CONNECTION_CONFIG.CIRCUIT_BREAKER_TIMEOUT) {
+        // Resetar o circuit breaker após o timeout
         this._isOpen = false;
         this.failureCount = 0;
-        logger.info('Circuit breaker fechado, tentando novamente', { context: 'CircuitBreaker' });
+        logger.info('Circuit breaker fechado, tentando novamente', { 
+          context: 'CircuitBreaker',
+          timeSinceLastFailure 
+        });
       } else {
+        // Log quando o circuit breaker ainda está aberto
+        logger.debug('Circuit breaker ainda aberto', {
+          context: 'CircuitBreaker',
+          timeRemaining: CONNECTION_CONFIG.CIRCUIT_BREAKER_TIMEOUT - timeSinceLastFailure,
+          failureCount: this.failureCount
+        });
         throw new Error('Circuit breaker aberto - muitas falhas consecutivas');
       }
     }
@@ -71,6 +83,8 @@ class CircuitBreaker {
     this._isOpen = false;
     this.failureCount = 0;
     this.lastFailureTime = 0;
+    connectionState.isCircuitOpen = false;
+    logger.info('Circuit breaker resetado manualmente', { context: 'CircuitBreaker' });
   }
 }
 
@@ -184,7 +198,7 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
     persistSession: true,
     autoRefreshToken: true,
     detectSessionInUrl: true,
-    storageKey: 'project-hive-auth',
+    storageKey: 'impacto-auth',
     storage: secureStorage
   },
   realtime: {
@@ -196,7 +210,7 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
   },
   global: {
     headers: {
-      'X-Client-Info': 'project-hive-manage'
+      'X-Client-Info': 'impacto-gestao'
     }
   }
 });

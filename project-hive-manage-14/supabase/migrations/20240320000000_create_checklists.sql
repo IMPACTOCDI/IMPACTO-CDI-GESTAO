@@ -1,4 +1,3 @@
--- Create checklists table
 CREATE TABLE IF NOT EXISTS checklists (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     title TEXT NOT NULL,
@@ -9,7 +8,19 @@ CREATE TABLE IF NOT EXISTS checklists (
     deleted_at TIMESTAMP WITH TIME ZONE
 );
 
--- Create indexes
+-- Create checklist_items table
+CREATE TABLE IF NOT EXISTS checklist_items (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    checklist_id UUID REFERENCES checklists(id) ON DELETE CASCADE,
+    text TEXT NOT NULL,
+    completed BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    completed_at TIMESTAMP WITH TIME ZONE,
+    order_index INTEGER DEFAULT 0,
+    deleted_at TIMESTAMP WITH TIME ZONE
+);
+
 CREATE INDEX IF NOT EXISTS idx_checklists_task_id ON checklists(task_id);
 CREATE INDEX IF NOT EXISTS idx_checklist_items_checklist_id ON checklist_items(checklist_id);
 
