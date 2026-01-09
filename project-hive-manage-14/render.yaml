@@ -2,7 +2,7 @@ services:
   - type: web
     name: gestor-de-projetos-impacto-frontend
     env: static
-    buildCommand: npm run build
+    buildCommand: npm ci && npm run build
     staticPublishPath: ./dist
     routes:
       - type: rewrite
